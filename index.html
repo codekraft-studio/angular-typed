@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJs Typed</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="MainCtrl">
+
+    <article>
+
+        <header>
+
+            <div>
+                <h1>angular-typed</b></h1>
+                <h2>the ultimate angularjs typing tool</h2>
+            </div>
+
+        </header>
+
+        <section>
+
+            <div class="type-box" start-timeout="2000" start-callback="myStartCallback()"
+            type-speed="100" type-strings="[
+                'Welcome to angular-typed, this fantastic module',
+                'will guide you through the text typing animation process',
+                'and make it easy to use for your websites or apps'
+            ]" typed></div>
+
+        </section>
+
+    </article>
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+<script type="text/javascript" src="dist/angular-typed.js"></script>
+<script>
+angular.module('app', ['angular-typed'])
+
+.controller('MainCtrl', function($scope) {
+
+  $scope.myCallback = function() {
+    console.log("All strings are typed.");
+  }
+
+  $scope.myStartCallback = function() {
+    console.log("The typing is started");
+  }
+
+})
+</script>
+</html>
