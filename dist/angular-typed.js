@@ -42,8 +42,19 @@ angular.module('angular-typed', [])
 
         var endBackspace = attrs.endBackspace || true;
 
+        var cursor = angular.element( document.createElement('span') ).addClass('typed-cursor').text( '|' );
+
         // clear element
         elem.empty();
+
+        // append cursor
+        elem.append(cursor);
+
+        function newLine(first) {
+            var line = angular.element( document.createElement('span') ).addClass('typed-line');
+            first ? elem.prepend(line) : elem.append(line);
+            elem = line;
+        }
 
         /**
         * Simulate the backspace press for erasing text
@@ -167,7 +178,8 @@ angular.module('angular-typed', [])
                 scope.startCallback()
             }
 
-            console.log( strings[startAt] );
+            // make new line (true for first line)
+            newLine(true);
 
             // start to write
             // at desired position
