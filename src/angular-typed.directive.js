@@ -26,9 +26,13 @@
             return;
         }
 
-        var startAt = attrs.startAt || 0;
+        var startLine = attrs.startLine || 0;
+
+        var currentLine = startLine;
 
         var startTimeout = parseInt( attrs.startTimeout ) || 0;
+
+        var loop = 'loop' in attrs && attrs.loop != 'false';
 
         var typeSpeed = parseInt( attrs.typeSpeed ) || 0;
 
@@ -38,7 +42,7 @@
 
         var endlineWait = attrs.endlineWait || 250;
 
-        var endBackspace = attrs.endBackspace || true;
+        var endBackspace = attrs.endBackspace || false;
 
         var cursor = angular.element( document.createElement('span') ).addClass('typed-cursor').text( '|' );
 
@@ -48,6 +52,9 @@
         // append cursor
         elem.append(cursor);
 
+        /**
+         * Create a new line for the text to type
+         */
         function newLine(first) {
             var line = angular.element( document.createElement('span') ).addClass('typed-line');
             first ? elem.prepend(line) : elem.append(line);
@@ -66,15 +73,26 @@
 
                 if( currPos == 0 ) {
 
-                    if( startAt < strings.length -1 ) {
+                    if( currentLine < strings.length -1 ) {
 
-                        startAt++
+                        currentLine++
 
-                        return typeText( strings[startAt], 0 )
+                        return typeText( strings[currentLine], 0 )
 
                     } else {
 
-                        console.log('all strings finished');
+                        // At the end of all run the callback if
+                        // specified and check if loop mode is enabled
+                        if( angular.isFunction(scope.endCallback) ) {
+                            // apply the user callback
+                            scope.$apply( scope.endCallback() );
+                        }
+
+                        // if loop mode is enabled
+                        // reset currentLine to starting line
+                        // and loop it !
+                        return loop ? startTyping() : null;
+
                     }
 
 
@@ -111,18 +129,26 @@
                     /**
                     * At end of all lines run the end-callback
                     */
-                    if( startAt == strings.length -1 ) {
+                    if( currentLine == strings.length -1 ) {
 
                         // check if last line should be removed
                         if( endBackspace ) {
 
                             backspace(text, currPos);
 
-                        }
+                        } else {
 
-                        // run the end callback if specified
-                        if( angular.isFunction(scope.endCallback) ) {
-                            return scope.$apply( scope.endCallback() )
+                            // At the end of all run the callback if
+                            // specified and check if loop mode is enabled
+                            if( angular.isFunction(scope.endCallback) ) {
+                                // apply the user callback
+                                scope.$apply( scope.endCallback() );
+                            }
+
+                            // if loop mode is enabled
+                            // reset currentLine to starting line
+                            // and loop it !
+                            return loop ? startTyping() : null;
                         }
 
                     } else {
@@ -138,8 +164,8 @@
                             */
                             $timeout(function() {
 
-                                startAt++
-                                return typeText( strings[startAt], 0 )
+                                currentLine++
+                                return typeText( strings[currentLine], 0 )
 
                             }, endlineWait);
 
@@ -148,7 +174,11 @@
 
                     }
 
-                    // move to next character to type
+                /**
+                 * Move to the next character
+                 * that need to be typed
+                 * (still the same line)
+                 */
                 } else {
 
                     var nextPos = currPos + 1;
@@ -166,25 +196,34 @@
         }
 
         /**
-        * Init the typing process
-        * after wait for start wait timeout
-        */
-        $timeout(function() {
+         * Start the typing animation
+         */
+        function startTyping(first) {
 
-            // if valid function
-            if( angular.isFunction(scope.startCallback) ) {
-                scope.startCallback()
-            }
+            $timeout(function () {
 
-            // make new line (true for first line)
-            newLine(true);
+                // if valid function
+                if( first && angular.isFunction(scope.startCallback) ) {
+                    scope.startCallback();
 
-            // start to write
-            // at desired position
-            return typeText( strings[startAt], 0 )
+                    // TODO: for multi-line purpose move this function
+                    // outside this if statement and do some logic
 
-        }, startTimeout);
+                    // make new line (true for first line)
+                    newLine(true);
+                }
 
+                // reset current line with original start line
+                currentLine = startLine;
+                // start everything
+                return typeText( strings[currentLine], 0 );
+
+            }, startTimeout);
+
+        }
+
+        // start
+        return startTyping(true);
     }
 
 })
