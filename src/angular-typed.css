@@ -1,7 +1,8 @@
 
 .typed-cursor {
-  animation: blink-animation 0.5s steps(5, start) infinite;
-  -webkit-animation: blink-animation 0.5s steps(5, start) infinite;
+  animation: blink-animation 850ms steps(5, start) infinite;
+  -webkit-animation: blink-animation 850ms steps(5, start) infinite;
+  margin-left: 2px;
 }
 
 @keyframes blink-animation {
