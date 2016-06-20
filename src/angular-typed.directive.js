@@ -123,75 +123,96 @@
 
             $timeout(function() {
 
-                // if end of current string
-                if( currPos == text.length ) {
+                var charPause = 0;
+                var substr = text.substr(currPos);
 
-                    /**
-                    * At end of all lines run the end-callback
-                    */
-                    if( currentLine == strings.length -1 ) {
+                // check for any user defined pause
+                if (substr.charAt(0) === '^') {
 
-                        // check if last line should be removed
-                        if( endBackspace ) {
+                    var skip = 1; // skip atleast 1
 
-                            backspace(text, currPos);
-
-                        } else {
-
-                            // At the end of all run the callback if
-                            // specified and check if loop mode is enabled
-                            if( angular.isFunction(scope.endCallback) ) {
-                                // apply the user callback
-                                scope.$apply( scope.endCallback() );
-                            }
-
-                            // if loop mode is enabled
-                            // reset currentLine to starting line
-                            // and loop it !
-                            return loop ? startTyping() : null;
-                        }
-
-                    } else {
-
-                        if( removeLine ) {
-
-                            backspace(text, currPos);
-
-                        } else {
-
-                            /**
-                            * Run end-line timeout for next line
-                            */
-                            $timeout(function() {
-
-                                currentLine++
-                                return typeText( strings[currentLine], 0 )
-
-                            }, endlineWait);
-
-                        }
-
-
+                    if (/^\^\d+/.test(substr)) {
+                        substr = /\d+/.exec(substr)[0];
+                        skip += substr.length;
+                        charPause = parseInt(substr);
                     }
 
-                /**
-                 * Move to the next character
-                 * that need to be typed
-                 * (still the same line)
-                 */
-                } else {
-
-                    var nextPos = currPos + 1;
-                    var string = text.substr(0, nextPos)
-
-                    // write new text
-                    elem.text( string );
-
-                    // type next
-                    typeText( text, nextPos );
+                    // strip out the escape character and pause value so they're not printed
+                    text = text.substring(0, currPos) + text.substring(currPos + skip);
                 }
 
-            }, delay)
+                $timeout(function () {
+
+                    // if end of current string
+                    if( currPos == text.length ) {
+
+                        /**
+                        * At end of all lines run the end-callback
+                        */
+                        if( currentLine == strings.length -1 ) {
+
+                            // check if last line should be removed
+                            if( endBackspace ) {
+
+                                backspace(text, currPos);
+
+                            } else {
+
+                                // At the end of all run the callback if
+                                // specified and check if loop mode is enabled
+                                if( angular.isFunction(scope.endCallback) ) {
+                                    // apply the user callback
+                                    scope.$apply( scope.endCallback() );
+                                }
+
+                                // if loop mode is enabled
+                                // reset currentLine to starting line
+                                // and loop it !
+                                return loop ? startTyping() : null;
+                            }
+
+                        } else {
+
+                            if( removeLine ) {
+
+                                backspace(text, currPos);
+
+                            } else {
+
+                                /**
+                                * Run end-line timeout for next line
+                                */
+                                $timeout(function() {
+
+                                    currentLine++
+                                    return typeText( strings[currentLine], 0 )
+
+                                }, endlineWait);
+
+                            }
+
+                        }
+
+                    /**
+                    * Move to the next character
+                    * that need to be typed
+                    * (still the same line)
+                    */
+                    } else {
+
+                        var nextPos = currPos + 1;
+                        var string = text.substr(0, nextPos)
+
+                        // write new text
+                        elem.text( string );
+
+                        // type next
+                        typeText( text, nextPos );
+                    }
+
+                }, charPause);
+
+            }, delay);
 
         }
 
