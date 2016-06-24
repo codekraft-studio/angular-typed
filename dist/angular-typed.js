@@ -32,6 +32,8 @@ angular.module('angular-typed', [])
 
         var currentLine = startLine;
 
+        var htmlMode = typeof attrs.htmlMode !== 'undefined';
+
         var startTimeout = parseInt( attrs.startTimeout ) || 0;
 
         var loop = 'loop' in attrs && attrs.loop != 'false';
@@ -73,6 +75,24 @@ angular.module('angular-typed', [])
 
             $timeout(function () {
 
+                if( htmlMode ) {
+
+                    var curChar = text.substr(currPos).charAt(0)
+
+                    if (curChar === '>' || curChar === ';') {
+
+                        var tag = '';
+                        var endtag = (curChar === '>') ? '<' : '&';
+
+                        while (text.substr(currPos).charAt(0) !== endtag) {
+                            tag += text.substr(currPos).charAt(0);
+                            currPos--;
+                        }
+
+                    }
+
+                }
+
                 if( currPos == 0 ) {
 
                     if( currentLine < strings.length -1 ) {
@@ -104,7 +124,7 @@ angular.module('angular-typed', [])
                     var string = text.substr(0, nextPos)
 
                     // write new text
-                    elem.text( string );
+                    htmlMode ? elem.html( string ) : elem.text( string );
 
                     // type next
                     backspace( text, nextPos );
@@ -143,6 +163,28 @@ angular.module('angular-typed', [])
                     text = text.substring(0, currPos) + text.substring(currPos + skip);
                 }
 
+                if( htmlMode ) {
+
+                    var curChar = text.substr(currPos).charAt(0)
+
+                    if (curChar === '<' || curChar === '&') {
+
+                        var tag = '';
+                        var endtag = (curChar === '<') ? '>' : ';';
+
+                        while (text.substr(currPos).charAt(0) !== endtag) {
+                            tag += text.substr(currPos).charAt(0);
+                            currPos++;
+                        }
+
+                    }
+
+                }
+
+                /**
+                 * A ipotetical character pause
+                 * defined by user (by default 0)
+                 */
                 $timeout(function () {
 
                     // if end of current string
@@ -206,7 +248,7 @@ angular.module('angular-typed', [])
                         var string = text.substr(0, nextPos)
 
                         // write new text
-                        elem.text( string );
+                        htmlMode ? elem.html( string ) : elem.text( string );
 
                         // type next
                         typeText( text, nextPos );
