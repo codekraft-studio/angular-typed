@@ -1,12 +1,26 @@
 {
   "name": "angular-typed",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.2",
+  "description": "the angularjs typing tool module, that helps you with typing animation",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "codekraft-studio",
+  "author": {
+    "name": "codekraft-studio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codekraft-studio/angular-typed.git"
+  },
+  "keywords": [
+    "angular",
+    "directive",
+    "text animation",
+    "typed",
+    "type animation",
+    "typing"
+  ],
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.7"
@@ -16,5 +30,35 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0"
-  }
+  },
+  "gitHead": "71994a4667483140f3d73d78208cc749152de220",
+  "bugs": {
+    "url": "https://github.com/codekraft-studio/angular-typed/issues"
+  },
+  "homepage": "https://github.com/codekraft-studio/angular-typed#readme",
+  "_id": "angular-typed@0.0.1",
+  "_shasum": "d29777226aad7484f5d7043e887d8451d508e483",
+  "_from": "angular-typed@latest",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.7.0",
+  "_npmUser": {
+    "name": "codekraft-studio",
+    "email": "info@codekraft.it"
+  },
+  "dist": {
+    "shasum": "d29777226aad7484f5d7043e887d8451d508e483",
+    "tarball": "https://registry.npmjs.org/angular-typed/-/angular-typed-0.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "codekraft-studio",
+      "email": "info@codekraft.it"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/angular-typed-0.0.1.tgz_1466686831153_0.8351201680488884"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/angular-typed/-/angular-typed-0.0.1.tgz"
 }
