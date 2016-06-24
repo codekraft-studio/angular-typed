@@ -33,26 +33,66 @@
 
             ]" typed></div>
 
+            <!-- <div class="type-box" start-timeout="2000" start-callback="myStartCallback()"
+            type-speed="50" back-speed="50" type-strings="mainStrings" typed></div>
+
+            <div class="button-group">
+                <button type="button" name="ENG" ng-click="changeLang('en')">ENG</button>
+                <button type="button" name="ITA" ng-click="changeLang('it')">ITA</button>
+            </div> -->
+
         </section>
 
     </article>
 
 </body>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.0/angular-translate.min.js"></script>
 <script type="text/javascript" src="dist/angular-typed.js"></script>
 <script>
-angular.module('app', ['angular-typed'])
 
-.controller('MainCtrl', function($scope) {
+    angular.module('app', [
+        'angular-typed',
+        'pascalprecht.translate'
+    ])
 
-  $scope.myCallback = function() {
-    console.log("All strings are typed.");
-  }
+    .config(function ($translateProvider) {
 
-  $scope.myStartCallback = function() {
-    console.log("The typing is started");
-  }
+        $translateProvider.translations('en', {
+            'FIRST_STRING': 'Welcome to angular-typed,^1500 this nice and easy module',
+            'SECOND_STRING': 'will help you with the typing animations in angular!^1000'
+        });
 
-})
+        $translateProvider.translations('it', {
+            'FIRST_STRING': 'Benvenuto in angular-typed,^1500 questo fantastico modulo',
+            'SECOND_STRING': 'ti aiuterà con le typing animations in angular!^1000'
+        });
+
+        $translateProvider.preferredLanguage('it');
+
+    })
+
+    .controller('MainCtrl', function($scope, $translate, $filter) {
+
+        // dinamic strings
+        $scope.mainStrings = [
+            $filter('translate')('FIRST_STRING'),
+            $filter('translate')('SECOND_STRING')
+        ];
+
+        $scope.changeLang = function (lang) {
+            $translate.use(lang);
+        }
+
+        $scope.myCallback = function() {
+            console.log("All strings are typed.");
+        }
+
+        $scope.myStartCallback = function() {
+            console.log("The typing is started");
+        }
+
+    })
+
 </script>
 </html>
