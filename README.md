@@ -1,6 +1,9 @@
 # angular-typed
 the angularjs typing tool module, that helps you with typing animation
 
+### [DEMO](http://www.codekraft.it/demos/angular-typed/)
+
+
 ### Getting started:
 
 Download the package from GitHub.
