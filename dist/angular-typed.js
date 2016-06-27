@@ -44,9 +44,7 @@ angular.module('angular-typed', [])
 
         var removeLine = attrs.removeLine || true;
 
-        var endlineWait = attrs.endlineWait || 250;
-
-        var endBackspace = attrs.endBackspace || false;
+        var removeLast = attrs.removeLast || false;
 
         var cursor = angular.element( document.createElement('span') ).addClass('typed-cursor').text( '|' );
 
@@ -196,7 +194,7 @@ angular.module('angular-typed', [])
                         if( currentLine == strings.length -1 ) {
 
                             // check if last line should be removed
-                            if( endBackspace ) {
+                            if( removeLast ) {
 
                                 backspace(text, currPos);
 
@@ -223,15 +221,8 @@ angular.module('angular-typed', [])
 
                             } else {
 
-                                /**
-                                * Run end-line timeout for next line
-                                */
-                                $timeout(function() {
-
-                                    currentLine++
-                                    return typeText( strings[currentLine], 0 )
-
-                                }, endlineWait);
+                                currentLine++
+                                return typeText( strings[currentLine], 0 )
 
                             }
 

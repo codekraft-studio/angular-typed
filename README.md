@@ -44,6 +44,20 @@ There are two main ways to use the __typed__ directive:
 
 ---
 
+### Customizations
+You can pass all of this extra attributes in the element that contain the __typed__ directive.
+
+*	**type-speed**: The typing animation speed (in millis) // default 0
+*	**back-speed**: The backspace animation speed (in millis) // default 0
+*	**html-mode**: Enable the html parse mode // default false
+*	**start-line**: The line to start typing // default 0
+*	**start-timeout**: The start timeout delay // default 0
+* 	**remove-line**: Delete each line after is been typed // default true
+* 	**remove-last**: Delete the last line when the typing animation ends // default false
+*	**loop**: Enable the loop at the end of the strings // default false
+
+---
+
 ### Development
 
 For the development mode, go to the project folder, install all the dependencies by typing:
