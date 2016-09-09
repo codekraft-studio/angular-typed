@@ -1,6 +1,6 @@
 angular.module('angular-typed', [])
 
-.directive('typed', function($log, $timeout, $q) {
+.directive('typed', ['$log', '$timeout', '$q', function($log, $timeout, $q) {
 
     var _scope = {
         typeStrings: '=?',
@@ -282,4 +282,4 @@ angular.module('angular-typed', [])
         return startTyping(true);
     }
 
-})
+}])
