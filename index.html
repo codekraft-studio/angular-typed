@@ -12,80 +12,50 @@
 
         <header>
 
-            <div>
+            <div class="showlate" ng-show="hasEndend">
                 <h1>angular-typed</b></h1>
                 <h2>the ultimate angularjs typing tool</h2>
             </div>
 
-        </header>
-
-        <section>
-
-            <div class="type-box" start-timeout="2000" start-callback="myStartCallback()"
+            <div class="type-box" start-timeout="2000" start-callback="myStartCallback()" end-callback="myCallback()"
             type-speed="20" back-speed="20" type-strings="[
 
-                'Welcome to ^500<b>angular-typed</b>,^1500 this nice and easy module',
-                'will help you with the <i>typing animations</i> in angular!^1000',
+                '<b>Hey!</b>^350 How are you?^500',
+                'Welcome to ^500<strong>angular-typed</strong>!^1000',
+                'This fantastic tool will help you^500',
+                'with the <i>typing animations in angularjs</i>!^1000',
                 '^1000',
-                'It is <u>very easy</u> to use,^500 have a try in you app!',
-                '^2000',
-                'and <strong>best of all</strong>^400.^450.^500.^550is free!'
+                'It is <u>very easy</u> to use^500',
+                'it supports <code>html markup</code>^750 and timings^500',
+                '^250Have a try in you app!^2000',
+                'and <strong>best of all</strong>^400.^500.^550.^550is free!'
 
             ]" html-mode typed></div>
 
-            <!-- <div class="type-box" start-timeout="2000" start-callback="myStartCallback()"
-            type-speed="50" back-speed="50" type-strings="mainStrings" typed></div>
+            <div class="showlate" ng-show="hasEndend">
+                <a ng-cloak href="https://github.com/codekraft-studio/angular-typed/archive/master.zip" class="btn">Get it</a>
+                <a ng-cloak href="https://github.com/codekraft-studio/angular-typed" class="btn">Docs</a>
+            </div>
 
-            <div class="button-group">
-                <button type="button" name="ENG" ng-click="changeLang('en')">ENG</button>
-                <button type="button" name="ITA" ng-click="changeLang('it')">ITA</button>
-            </div> -->
-
-        </section>
+        </header>
 
     </article>
 
 </body>
 <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.0/angular-translate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
 <script type="text/javascript" src="dist/angular-typed.js"></script>
 <script>
 
     angular.module('app', [
-        'angular-typed',
-        'pascalprecht.translate'
+        'ngAnimate',
+        'angular-typed'
     ])
 
-    .config(function ($translateProvider) {
-
-        $translateProvider.translations('en', {
-            'FIRST_STRING': 'Welcome to angular-typed,^1500 this nice and easy module',
-            'SECOND_STRING': 'will help you with the typing animations in angular!^1000'
-        });
-
-        $translateProvider.translations('it', {
-            'FIRST_STRING': 'Benvenuto in angular-typed,^1500 questo fantastico modulo',
-            'SECOND_STRING': 'ti aiuterà con le typing animations in angular!^1000'
-        });
-
-        $translateProvider.preferredLanguage('it');
-
-    })
-
-    .controller('MainCtrl', function($scope, $translate, $filter) {
-
-        // dinamic strings
-        $scope.mainStrings = [
-            $filter('translate')('FIRST_STRING'),
-            $filter('translate')('SECOND_STRING')
-        ];
-
-        $scope.changeLang = function (lang) {
-            $translate.use(lang);
-        }
+    .controller('MainCtrl', function($scope) {
 
         $scope.myCallback = function() {
-            console.log("All strings are typed.");
+            $scope.hasEndend = true;
         }
 
         $scope.myStartCallback = function() {
