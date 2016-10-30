@@ -1,6 +1,6 @@
 {
   "name": "angular-typed",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "the angularjs typing tool module, that helps you with typing animation",
   "main": "",
   "scripts": {
