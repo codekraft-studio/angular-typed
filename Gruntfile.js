@@ -43,6 +43,15 @@ module.exports = function(grunt) {
 
         },
 
+        connect: {
+            server: {
+                options: {
+                    port: 8080,
+                    hostname: '*',
+                    open: true
+                }
+            }
+        },
         watch: {
 
             scripts: {
@@ -58,8 +67,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['connect', 'watch']);
     grunt.registerTask('build', ['concat', 'ngAnnotate', 'uglify']);
 
 }

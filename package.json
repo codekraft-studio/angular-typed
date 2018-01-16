@@ -2,9 +2,11 @@
   "name": "angular-typed",
   "version": "0.0.3",
   "description": "the angularjs typing tool module, that helps you with typing animation",
-  "main": "",
+  "main": "./dist/angular-typed.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "grunt",
+    "build": "grunt build"
   },
   "author": {
     "name": "codekraft-studio"
@@ -28,6 +30,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-ng-annotate": "^2.0.2"
