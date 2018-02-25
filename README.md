@@ -1,7 +1,7 @@
 # angular-typed
 the angularjs typing tool module, that helps you with typing animation
 
-### [DEMO](http://www.codekraft.it/demos/angular-typed/)
+### [DEMO](https://codekraft-studio.github.io/angular-typed/)
 
 
 ### Getting started:
@@ -24,6 +24,28 @@ Add __angular-typed__ to your module dependencies:
 angular.module('app', ['angular-typed'])
 ```
 and you can start using the __typed__ directive in your app!
+
+## Example
+The source code that create the demo page:
+```html
+<div class="type-box"
+start-timeout="2000"
+start-callback="myStartCallback()"
+end-callback="myCallback()"
+type-speed="20"
+back-speed="20"
+type-strings="[
+    '<b>Hey!</b>^350 How are you?^500',
+    'Welcome to ^500<strong>angular-typed</strong>!^1000',
+    'This fantastic tool will help you^500',
+    'with the <i>typing animations in angularjs</i>!^1000',
+    '^1000',
+    'It is <u>very easy</u> to use^500',
+    'it supports <code>html markup</code>^750 and timings^500',
+    '^250Have a try in you app!^2000',
+    'and <strong>best of all</strong>^400.^500.^550.^550is free!'
+]" html-mode typed></div>
+```
 
 ---
 
@@ -58,6 +80,7 @@ You can pass all of this extra attributes in the element that contain the __type
 * 	**remove-line**: Delete each line after is been typed // default true
 * 	**remove-last**: Delete the last line when the typing animation ends // default false
 *	**loop**: Enable the loop at the end of the strings // default false
+*	**cursor**: A string that will be used as cursor (Default: '|')
 
 ---
 
